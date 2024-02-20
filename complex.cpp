@@ -1,58 +1,57 @@
-#include<iostream>
-
+#include <iostream>
 using namespace std;
 
-template< class T>
 class Complex{
-	T x;
-	T y;
+    float x;
+    float y;
 public:
-	Complex(T x, T y){
-		this->x = x;
-		this->y = y;
-	}
-	Complex(){
-		//defalut
-	 }
-	
-	Complex operator+(Complex& c){
-		Complex temp;
-		temp.x = x + c.x;
-		temp.y = y + c.y;
-		return temp;
-	}
-	Complex operator-(Complex& c){
-		Complex temp;
-		temp.x = x - c.x;
-		temp.y = y - c.y;
-		return temp;
-	}
-	Complex operator*(Complex& c){
-		Complex temp;
-		temp.x = x*c.x - y*c.y;
-		temp.y = x*c.y + y*c.x;
-		return temp;
-	}
-	void conjugate(Complex& c){
-		x = x;
-		y = -y;
-	}
-	void print(){
-		if(y >= 0)cout<<x<<" + "<<y<<"i"<<endl;
-		else cout<<x<<" - "<<(-y)<<"i"<<endl;
-
-	}
+    Complex(float x = 0, float y = 0)
+    {
+        this->x = x;
+        this->y = y;
+    }
+    friend Complex operator+(const Complex& , const Complex&);
+    friend Complex operator-(const Complex& , const Complex&);
+    friend Complex operator*(const Complex& , const Complex&);
+    friend Complex operator+(const Complex& , const Complex&);
+    friend ostream& operator<<(ostream& , const Complex&);
+    Complex conjugate(Complex& c){
+        Complex temp;
+        temp.x = c.x;
+        temp.y = -c.y;
+        return temp;
+    }
 };
+Complex operator+(const Complex &c1, const Complex  &c2)
+{
+    Complex temp;
+    temp.x = c1.x + c2.x;
+    temp.y = c1.y + c2.y;
+    return temp;
+}
+Complex operator-(const Complex &c1, const Complex  &c2)
+{
+    Complex temp;
+    temp.x = c1.x - c2.x;
+    temp.y = c1.y - c2.y;
+    return temp;
+}
+Complex operator*(const Complex &c1, const Complex  &c2)
+{
+    Complex temp;
+    temp.x = c1.x * c2.x - c1.y * c2.y;
+    temp.y = c1.x * c2.y + c1.y * c2.x;
+    return temp;
+}
+ostream& operator<<(ostream& dout, const Complex& c){
+    if(c.y >= 0)dout << c.x << " + " << c.y << "i"<<endl;
+    else dout << c.x << " - " << -c.y << "i"<<endl;
+    return dout;
+}
 
-int main(){
-	Complex<int> c1(5,6), c2(4,7);
-	Complex<int>c3 = c1 + c2;  //c1.operator+(c2);
-	c3.print();
-	Complex<int> c4 = c1 - c2;
-	c4.print();
-	Complex<int> c5 = c1 * c2;
-	c5.print();
-	c1.conjugate(c1);
-	c1.print();
-	
+int main()
+{
+    Complex c1(1, -1), c2(2, 2), c3(3, 3);
+    Complex c4 = c2 - c1;
+    cout<<c1<<c2<<c3<<c4;
 }
