@@ -44,9 +44,10 @@ void permutation(int arr[], int n)
 	else
 	{
 		int j;
-		for (j = n - 1; j >= i + 1 && arr[j] <= arr[i]; j--)
-		{
-		}
+		//find first element greater than arr[i] from right
+		for (j = n - 1; j >= i + 1 && arr[j] <= arr[i]; j--);
+		
+		//swap arr[i] with the element found above
 		swap(arr[i], arr[j]);
 		insertionSort(arr, n, i + 1);
 	}
