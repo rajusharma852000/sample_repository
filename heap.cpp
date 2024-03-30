@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<climits>
 using  namespace std;
 
 class Heap{
@@ -30,32 +31,21 @@ public:
 			perror("Invalid Key");
 		}
 		arr[pos] = newVal;
-		insert(pos, newVal);
+
+		//reverse heapify
+        int parent = (pos-1)/2;
+        while(pos > 0 && arr[parent] < arr[pos]){
+            swap(arr[parent], arr[pos]);
+            pos = parent;
+            parent = (pos-1)/2;
+        }
 	}
-	void insert(int ind, int data){
+	void insert(int data){
 	
-		//if new element is being inserted
-		if(ind == arr.size()) 
-			arr.push_back(data);
-			
-		//move the element to its correct place
-		int curr = ind;
-		while(curr > 0){
-			int parent = (curr-1)/2;
-			int l = parent*2+1;
-			int r = parent*2+2;
-			int largest = parent;
-			if(l < arr.size() && arr[l] > arr[largest]) largest = l;
-			if(r < arr.size() && arr[r] > arr[largest]) largest = r;
-			if(largest == parent){
-				return;
-			}
-			else{
-				swap(arr[largest], arr[parent]);
-				curr = parent;
-			}
-		}
+		arr.push_back(INT_MIN);
+		increaseKey(arr.size() - 1, data);
 	}
+			
 	int remove(){
 		if(arr.size() == 0){
 			perror("heap is empty");
