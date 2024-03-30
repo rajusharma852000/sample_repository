@@ -1,30 +1,69 @@
-#include<iostream>
-#include<fstream>
+#include <iostream>
+#include <fstream>
 using namespace std;
-void reverse(int arr[],int start, int end){
-		while(start < end){
-			swap(arr[start], arr[end]);
-			start ++, end --;
+void reverse(int arr[], int start, int end)
+{
+	while (start < end)
+	{
+		swap(arr[start], arr[end]);
+		start++, end--;
+	}
+}
+bool isSorted(int arr[], int n)
+{
+	for (int i = 0; i < n - 1; i++)
+	{
+		if (arr[i] > arr[i + 1])
+			return false;
+	}
+	return true;
+}
+void insertionSort(int arr[], int n, int start)
+{
+	for (int i = start + 1; i < n; i++)
+	{
+		int ind = i;
+		for (int j = i - 1; j >= start && arr[j] > arr[ind]; j--)
+		{
+			swap(arr[ind], arr[j]);
+			ind--;
 		}
 	}
-bool isSorted(int arr[]){
-		for(int i = 0; i < n-1; i++){
-			if(arr[i] > arr[i+1]) return false;
-		}
-		return true;
+}
+void permutation(int arr[], int n)
+{
+	int i;
+	for (i = n - 2; i >= 0; i--)
+	{
+		if (arr[i] < arr[i + 1])
+			break;
 	}
-	void permutation(int arr[], int n){
-		int i;
-		for(i = n-2; i >= 0; i--){
-			if(arr[i] < arr[i+1]) break;
+	// already sorted
+	if (i == -1)
+		reverse(arr, 0, n-1);
+	else
+	{
+		int j;
+		for (j = n - 1; j >= i + 1 && arr[j] <= arr[i]; j--)
+		{
 		}
-		//already sorted
-		if(i == -1)
-			reverse(arr,0, n);
-		else{
-			swap(arr[i], arr[n-1]);
-			insertionSort(arr, n, i+1);
-		}
+		swap(arr[i], arr[j]);
+		insertionSort(arr, n, i + 1);
+	}
+}
+
+int main()
+{
+	int arr[] = {3, 2, 4, 1,5,7,9,6,8};
+	int n = sizeof(arr) / sizeof(arr[0]);
+
+	//while not sorted, find next permutation
+	while(!isSorted(arr, n)){
+		permutation(arr, n);
 	}
 	
-	
+	for (int i = 0; i < n; i++){
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+}
