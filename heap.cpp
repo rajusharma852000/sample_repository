@@ -33,15 +33,14 @@ public:
 		arr[pos] = newVal;
 
 		//reverse heapify
-        int parent = (pos-1)/2;
-        while(pos > 0 && arr[parent] < arr[pos]){
-            swap(arr[parent], arr[pos]);
-            pos = parent;
-            parent = (pos-1)/2;
-        }
+	        int parent = (pos-1)/2;
+	        while(pos > 0 && arr[parent] < arr[pos]){
+	            swap(arr[parent], arr[pos]);
+	            pos = parent;
+	            parent = (pos-1)/2;
+	        }
 	}
 	void insert(int data){
-	
 		arr.push_back(INT_MIN);
 		increaseKey(arr.size() - 1, data);
 	}
